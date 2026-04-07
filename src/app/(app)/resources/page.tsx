@@ -3,10 +3,11 @@
 import {
   BookOpen,
   Download,
-  ExternalLink,
   FileText,
   Film,
+  Play,
   Search,
+  TrendingDown,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
@@ -14,87 +15,47 @@ import { useMemo, useState } from "react";
 import { GoldDivider } from "@/components/ui/gold-divider";
 import { Input } from "@/components/ui/input";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { cn } from "@/lib/utils";
 
 type ResourceType = "article" | "video" | "pdf";
 
-const resources: {
-  id: string;
-  title: string;
-  type: ResourceType;
-  excerpt: string;
-  tag: string;
-}[] = [
-  {
-    id: "r1",
-    title: "Destination Resilience Playbook",
-    type: "pdf",
-    excerpt: "A comprehensive framework for sustainable tourism recovery in the post-pandemic era.",
-    tag: "Tourism",
-  },
-  {
-    id: "r2",
-    title: "Service Excellence in Hospitality",
-    type: "article",
-    excerpt: "Operational insights gathered from leading five-star hotel groups across the region.",
-    tag: "Hospitality",
-  },
-  {
-    id: "r3",
-    title: "ISO Readiness Workshop — Full Recording",
-    type: "video",
-    excerpt: "Step-by-step walkthrough of documentation, internal audits, and management review cycles.",
-    tag: "Quality",
-  },
-  {
-    id: "r4",
-    title: "Administrative Research Methods",
-    type: "pdf",
-    excerpt: "Applied research toolkit covering survey design, analysis, and reporting for managers.",
-    tag: "Research",
-  },
-  {
-    id: "r5",
-    title: "Tourism Trends 2026 — Annual Report",
-    type: "article",
-    excerpt: "Key indicators, emerging markets, and strategy recommendations for the coming year.",
-    tag: "Tourism",
-  },
-  {
-    id: "r6",
-    title: "Train-the-Trainer Certification Guide",
-    type: "pdf",
-    excerpt: "Instructional design principles, facilitation skills, and competency assessment tools.",
-    tag: "Training",
-  },
-];
-
-const typeConfig: Record<ResourceType, { Icon: React.ElementType; color: string; label: string }> = {
-  pdf:     { Icon: FileText, color: "#c4854a", label: "PDF" },
-  article: { Icon: BookOpen, color: "#7db3e8", label: "Article" },
-  video:   { Icon: Film,     color: "#a87de8", label: "Video" },
+const typeConfig: Record<ResourceType, { Icon: React.ElementType; color: string }> = {
+  pdf:     { Icon: FileText, color: "#c4854a" },
+  article: { Icon: BookOpen, color: "#7db3e8" },
+  video:   { Icon: Film,     color: "#a87de8" },
 };
 
 export default function ResourcesPage() {
   const t = useTranslations("resources");
+  const locale = useLanguageStore((s) => s.locale);
   const [filter, setFilter] = useState<ResourceType | "all">("all");
   const [query, setQuery] = useState("");
 
+  const rawItems = t.raw("items") as {
+    id: string;
+    type: ResourceType;
+    downloads: number;
+    en: { title: string; excerpt: string };
+    ar: { title: string; excerpt: string };
+  }[];
+
   const filtered = useMemo(() => {
-    return resources.filter((r) => {
+    return rawItems.filter((r) => {
       const matchType = filter === "all" || r.type === filter;
       const q = query.trim().toLowerCase();
-      const matchQuery =
-        !q || r.title.toLowerCase().includes(q) || r.excerpt.toLowerCase().includes(q);
+      const localData = r[locale];
+      const matchQuery = !q || localData.title.toLowerCase().includes(q) || localData.excerpt.toLowerCase().includes(q);
       return matchType && matchQuery;
     });
-  }, [filter, query]);
+  }, [filter, query, rawItems, locale]);
 
-  const filterButtons: { id: ResourceType | "all"; label: string }[] = [
-    { id: "all",     label: t("filterAll") },
-    { id: "article", label: t("filterArticles") },
-    { id: "video",   label: t("filterVideos") },
-    { id: "pdf",     label: t("filterPdf") },
+  type FilterLabelKey = "filterAll" | "filterArticles" | "filterVideos" | "filterPdf";
+  const filterButtons: { id: ResourceType | "all"; labelKey: FilterLabelKey }[] = [
+    { id: "all",     labelKey: "filterAll" },
+    { id: "article", labelKey: "filterArticles" },
+    { id: "video",   labelKey: "filterVideos" },
+    { id: "pdf",     labelKey: "filterPdf" },
   ];
 
   return (
@@ -102,14 +63,13 @@ export default function ResourcesPage() {
       {/* Header */}
       <div className="mx-auto max-w-7xl px-4 pb-12 text-center sm:px-6 lg:px-8">
         <FadeIn>
-          <span className="section-label mb-5">Knowledge Hub</span>
+          <span className="section-label mb-5">{t("pageBadge")}</span>
           <h1 className="font-heading mt-5 text-4xl font-extrabold text-white sm:text-5xl">
             {t("title")}
           </h1>
           <GoldDivider className="mx-auto mt-5 max-w-xs" />
           <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-slate-300">
-            Download research reports, watch recorded sessions, and read practitioner
-            articles — all curated for tourism and administrative professionals.
+            {t("subtitle")}
           </p>
         </FadeIn>
       </div>
@@ -144,7 +104,7 @@ export default function ResourcesPage() {
                       : "border-white/10 bg-white/5 text-slate-400 hover:border-[#c4854a]/30 hover:text-white"
                   )}
                 >
-                  {f.label}
+                  {t(f.labelKey)}
                 </button>
               ))}
             </div>
@@ -154,7 +114,9 @@ export default function ResourcesPage() {
         {/* Grid */}
         <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((r) => {
-            const { Icon, color, label } = typeConfig[r.type];
+            const { Icon, color } = typeConfig[r.type];
+            const localData = r[locale];
+            const isVideo = r.type === "video";
             return (
               <StaggerItem key={r.id}>
                 <article className="glass-card group flex h-full flex-col p-6">
@@ -168,27 +130,33 @@ export default function ResourcesPage() {
                     }}
                   >
                     <Icon className="size-3.5" aria-hidden />
-                    {label}
+                    {r.type.toUpperCase()}
                   </div>
 
-                  {/* Tag */}
-                  <span className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-[#c4854a]/70">
-                    {r.tag}
-                  </span>
-
-                  <h2 className="font-heading mb-2 text-lg font-bold leading-snug text-white transition-colors group-hover:text-[#ebd190]">
-                    {r.title}
+                  <h2 className="font-heading mb-3 text-lg font-bold leading-snug text-white transition-colors group-hover:text-[#ebd190]">
+                    {localData.title}
                   </h2>
-                  <p className="flex-1 text-sm leading-relaxed text-slate-400">{r.excerpt}</p>
+                  <p className="flex-1 text-sm leading-relaxed text-slate-400">{localData.excerpt}</p>
+
+                  {/* Downloads stat */}
+                  <div className="mt-4 flex items-center gap-1.5 text-[11px] text-slate-500">
+                    <TrendingDown className="size-3 rotate-180" aria-hidden />
+                    {r.downloads.toLocaleString(locale === "ar" ? "ar-EG" : "en-US")} {t("downloadCount")}
+                  </div>
 
                   <button
                     type="button"
-                    className="mt-5 flex items-center gap-2 self-start text-sm font-semibold text-[#ebd190] hover:underline"
+                    className="mt-4 flex items-center gap-2 self-start text-sm font-semibold text-[#ebd190] hover:underline"
                   >
-                    {r.type === "video" ? (
+                    {isVideo ? (
                       <>
-                        <ExternalLink className="size-4" aria-hidden />
-                        Watch
+                        <Play className="size-4" aria-hidden />
+                        {t("watch")}
+                      </>
+                    ) : r.type === "article" ? (
+                      <>
+                        <BookOpen className="size-4" aria-hidden />
+                        {t("readNow")}
                       </>
                     ) : (
                       <>

@@ -7,47 +7,20 @@ import { useTranslations } from "next-intl";
 
 import { GoldDivider } from "@/components/ui/gold-divider";
 import { FadeIn, SlideIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import { teamMembers } from "@/lib/data";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
-const team = [
-  {
-    id: "1",
-    name: "Dr. Amira Hassan",
-    role: "Academic Director",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
-    bio: "15 years in tourism education; PhD in Hospitality Management.",
-  },
-  {
-    id: "2",
-    name: "Prof. Karim Nabil",
-    role: "Research Lead",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80",
-    bio: "Published researcher in quality management and applied learning.",
-  },
-  {
-    id: "3",
-    name: "Ms. Dina Soliman",
-    role: "Programs Lead",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
-    bio: "Designed curricula adopted by three international hotel groups.",
-  },
-  {
-    id: "4",
-    name: "Mr. Hany Farid",
-    role: "Industry Partnerships",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
-    bio: "Built partnerships with 30+ organisations across the MENA region.",
-  },
-];
-
-const values = [
-  { icon: CheckCircle2, label: "Excellence" },
-  { icon: Globe2,       label: "Global Outlook" },
-  { icon: Heart,        label: "Integrity" },
-  { icon: Target,       label: "Impact" },
+const valueKeys = [
+  { icon: CheckCircle2, titleKey: "value1" as const, descKey: "value1Desc" as const },
+  { icon: Globe2,       titleKey: "value2" as const, descKey: "value2Desc" as const },
+  { icon: Heart,        titleKey: "value3" as const, descKey: "value3Desc" as const },
+  { icon: Target,       titleKey: "value4" as const, descKey: "value4Desc" as const },
 ];
 
 export default function AboutPage() {
   const t = useTranslations("about");
+  const tSec = useTranslations("sections");
+  const locale = useLanguageStore((s) => s.locale);
 
   return (
     <div className="space-y-24 py-16">
@@ -55,62 +28,74 @@ export default function AboutPage() {
       {/* ── Hero banner ── */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn className="text-center">
-          <span className="section-label mb-6">Who We Are</span>
+          <span className="section-label mb-6">{t("pageBadge")}</span>
           <h1 className="font-heading mt-6 text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl">
             {t("title")}
           </h1>
           <GoldDivider className="mx-auto mt-6 max-w-xs" />
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
-            Since 2012 the American Institute has been shaping professionals who lead with knowledge,
-            practice, and integrity across the tourism and administrative sectors.
+            {t("subtitle")}
           </p>
         </FadeIn>
       </div>
 
-      {/* ── Vision / Mission / Values ── */}
+      {/* ── Vision / Mission ── */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {/* Vision */}
           <SlideIn direction="left">
             <section className="glass-card flex h-full flex-col p-8">
-              <Eye className="mb-5 size-10 text-[#ebd190]" aria-hidden />
-              <h2 className="font-heading mb-3 text-xl font-bold text-white">{t("vision")}</h2>
-              <div className="gold-line mb-4 w-12" />
+              <div className="mb-5 flex items-center gap-3">
+                <span className="flex size-12 items-center justify-center rounded-full border border-[#c4854a]/40 bg-[#c4854a]/15">
+                  <Eye className="size-6 text-[#ebd190]" aria-hidden />
+                </span>
+                <span className="section-label">{t("visionBadge")}</span>
+              </div>
+              <h2 className="font-heading mb-3 text-2xl font-bold text-white">{t("vision")}</h2>
+              <div className="gold-line mb-5 w-12" />
               <p className="text-sm leading-relaxed text-slate-300">{t("visionText")}</p>
             </section>
           </SlideIn>
 
           {/* Mission */}
-          <FadeIn delay={0.1}>
+          <SlideIn direction="right">
             <section className="glass-card flex h-full flex-col p-8">
-              <Target className="mb-5 size-10 text-[#ebd190]" aria-hidden />
-              <h2 className="font-heading mb-3 text-xl font-bold text-white">{t("mission")}</h2>
-              <div className="gold-line mb-4 w-12" />
-              <p className="text-sm leading-relaxed text-slate-300">{t("missionText")}</p>
-            </section>
-          </FadeIn>
-
-          {/* Values */}
-          <SlideIn direction="right" delay={0.05}>
-            <section className="glass-card flex h-full flex-col p-8">
-              <Heart className="mb-5 size-10 text-[#ebd190]" aria-hidden />
-              <h2 className="font-heading mb-3 text-xl font-bold text-white">{t("values")}</h2>
-              <div className="gold-line mb-4 w-12" />
-              <p className="mb-5 text-sm leading-relaxed text-slate-300">{t("valuesText")}</p>
-              <div className="mt-auto grid grid-cols-2 gap-2">
-                {values.map(({ icon: Icon, label }) => (
-                  <span
-                    key={label}
-                    className="flex items-center gap-2 rounded-lg border border-[#c4854a]/25 bg-[#c4854a]/10 px-3 py-2 text-xs font-semibold text-[#ebd190]"
-                  >
-                    <Icon className="size-3.5 shrink-0" aria-hidden />
-                    {label}
-                  </span>
-                ))}
+              <div className="mb-5 flex items-center gap-3">
+                <span className="flex size-12 items-center justify-center rounded-full border border-[#c4854a]/40 bg-[#c4854a]/15">
+                  <Target className="size-6 text-[#ebd190]" aria-hidden />
+                </span>
+                <span className="section-label">{t("missionBadge")}</span>
               </div>
+              <h2 className="font-heading mb-3 text-2xl font-bold text-white">{t("mission")}</h2>
+              <div className="gold-line mb-5 w-12" />
+              <p className="text-sm leading-relaxed text-slate-300">{t("missionText")}</p>
             </section>
           </SlideIn>
         </div>
+      </div>
+
+      {/* ── Values ── */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn className="mb-10 text-center">
+          <span className="section-label mb-4">{t("valuesBadge")}</span>
+          <h2 className="font-heading mt-4 text-3xl font-bold text-white sm:text-4xl">
+            {t("values")}
+          </h2>
+          <GoldDivider className="mx-auto mt-5 max-w-xs" />
+        </FadeIn>
+        <StaggerContainer className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {valueKeys.map(({ icon: Icon, titleKey, descKey }) => (
+            <StaggerItem key={titleKey}>
+              <div className="glass-card group flex h-full flex-col items-center gap-4 p-7 text-center">
+                <span className="flex size-14 items-center justify-center rounded-full border border-[#c4854a]/40 bg-gradient-to-br from-[#c4854a]/20 to-[#0c2c59] text-[#ebd190] transition-all duration-300 group-hover:border-[#ebd190]/60 group-hover:shadow-[0_0_20px_rgba(196,133,74,0.3)]">
+                  <Icon className="size-6" aria-hidden />
+                </span>
+                <h3 className="font-heading text-sm font-bold text-white">{t(titleKey)}</h3>
+                <p className="text-xs leading-relaxed text-slate-400">{t(descKey)}</p>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
       </div>
 
       {/* ── Story strip ── */}
@@ -119,31 +104,38 @@ export default function AboutPage() {
           <SlideIn direction="left">
             <div className="relative overflow-hidden rounded-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=900&q=80"
+                src="https://picsum.photos/seed/institute-story/900/600"
                 alt=""
                 width={700}
                 height={480}
                 className="w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#0c2c59]/60 to-transparent" />
+              {/* Stats overlay */}
+              <div className="absolute bottom-4 start-4 flex gap-3">
+                {[
+                  { value: "3,200+", label: locale === "ar" ? "خريج" : "Graduates" },
+                  { value: "18",     label: locale === "ar" ? "دولة" : "Countries" },
+                ].map((s) => (
+                  <div key={s.label} className="rounded-lg border border-[#c4854a]/40 bg-[#0c2c59]/80 px-3 py-2 text-center backdrop-blur-sm">
+                    <p className="font-heading text-lg font-bold text-[#ebd190]">{s.value}</p>
+                    <p className="text-[10px] text-slate-300">{s.label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </SlideIn>
           <SlideIn direction="right">
-            <span className="section-label mb-6">Our Story</span>
+            <span className="section-label mb-6">{t("storyBadge")}</span>
             <h2 className="font-heading mt-5 text-3xl font-bold text-white sm:text-4xl">
-              Building Leaders Since 2012
+              {t("storyTitle")}
             </h2>
             <GoldDivider className="my-6 max-w-xs" />
-            <p className="mb-4 text-sm leading-loose text-slate-300">
-              What began as a single applied-training cohort of 32 professionals in Cairo has grown
-              into a regionally recognised institute serving graduates across 18 countries. Our
-              partnership-first model means that every programme is co-designed with industry to
-              guarantee direct workplace relevance.
+            <p className="mb-5 text-sm leading-loose text-slate-300">
+              {t("storyP1")}
             </p>
             <p className="text-sm leading-loose text-slate-400">
-              Accredited by the Egyptian Organization for Standardization, ISO 9001, and the
-              National Quality Institute, our quality management system ensures that every course
-              meets the highest international benchmarks.
+              {t("storyP2")}
             </p>
           </SlideIn>
         </div>
@@ -152,52 +144,54 @@ export default function AboutPage() {
       {/* ── Team ── */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn className="mb-12 text-center">
-          <span className="section-label mb-4">The People</span>
+          <span className="section-label mb-4">{t("teamBadge")}</span>
           <h2 className="font-heading mt-4 text-3xl font-bold text-white sm:text-4xl">
             {t("teamTitle")}
           </h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-slate-400">{t("teamSubtitle")}</p>
           <GoldDivider className="mx-auto mt-5 max-w-xs" />
         </FadeIn>
 
         <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {team.map((member) => (
-            <StaggerItem key={member.id}>
-              <article className="group relative overflow-hidden rounded-2xl border border-white/10">
-                {/* Photo */}
-                <div className="relative aspect-[3/4]">
-                  <Image
-                    src={member.image}
-                    alt=""
-                    fill
-                    className="object-cover transition duration-700 group-hover:scale-110"
-                    sizes="(max-width: 640px) 100vw, 25vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0c2c59] via-[#0c2c59]/20 to-transparent" />
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 flex flex-col justify-end gap-2 bg-gradient-to-t from-[#9a6c3a]/90 to-transparent p-5 opacity-0 transition-all duration-300 group-hover:opacity-100">
-                    <p className="font-heading text-lg font-bold text-white">{member.name}</p>
-                    <p className="text-sm text-white/90">{member.role}</p>
-                    <p className="text-xs text-white/70">{member.bio}</p>
-                    <a
-                      href="https://linkedin.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold text-white"
-                      aria-label="LinkedIn"
-                    >
-                      <ExternalLink className="size-3.5" />
-                      LinkedIn
-                    </a>
+          {teamMembers.map((member) => {
+            const localData = member[locale];
+            return (
+              <StaggerItem key={member.id}>
+                <article className="group relative overflow-hidden rounded-2xl border border-white/10">
+                  {/* Photo */}
+                  <div className="relative aspect-[3/4]">
+                    <Image
+                      src={member.image}
+                      alt={localData.name}
+                      fill
+                      className="object-cover transition duration-700 group-hover:scale-110"
+                      sizes="(max-width: 640px) 100vw, 25vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0c2c59] via-[#0c2c59]/20 to-transparent" />
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 flex flex-col justify-end gap-2 bg-gradient-to-t from-[#9a6c3a]/90 to-[#0c2c59]/60 p-5 opacity-0 transition-all duration-300 group-hover:opacity-100">
+                      <p className="text-xs leading-relaxed text-white/80">{localData.bio}</p>
+                      <a
+                        href="https://linkedin.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-white"
+                        aria-label={t("teamLinkedIn")}
+                      >
+                        <ExternalLink className="size-3.5" />
+                        {t("teamLinkedIn")}
+                      </a>
+                    </div>
                   </div>
-                </div>
-                {/* Card footer */}
-                <div className="p-4">
-                  <p className="font-heading font-bold text-white">{member.name}</p>
-                  <p className="text-sm text-[#c4854a]">{member.role}</p>
-                </div>
-              </article>
-            </StaggerItem>
-          ))}
+                  {/* Card footer */}
+                  <div className="border-t border-white/10 p-4">
+                    <p className="font-heading font-bold text-white">{localData.name}</p>
+                    <p className="mt-0.5 text-sm text-[#c4854a]">{localData.role}</p>
+                  </div>
+                </article>
+              </StaggerItem>
+            );
+          })}
         </StaggerContainer>
       </div>
     </div>

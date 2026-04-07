@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { ContactForm } from "@/components/contact/contact-form";
@@ -10,28 +10,28 @@ import { FadeIn, SlideIn } from "@/components/ui/motion";
 const MAP_EMBED =
   "https://maps.google.com/maps?q=30.0444%2C31.2357&z=15&output=embed";
 
-const contactDetails = [
-  { Icon: Phone, href: "tel:+2020000000",     value: "+20 2 0000 0000",   label: "Call us" },
-  { Icon: Mail,  href: "mailto:info@aiaetar.edu", value: "info@aiaetar.edu", label: "Email us" },
-  { Icon: MapPin, href: null,                 value: "Cairo, Egypt",       label: "Visit us" },
-];
-
 export default function ContactPage() {
   const t = useTranslations("contact");
+
+  const contactDetails = [
+    { Icon: Phone, href: `tel:${t("phone1")}`, value: t("phone1"), label: t("callUs") },
+    { Icon: Mail,  href: `mailto:${t("email1")}`, value: t("email1"), label: t("emailUs") },
+    { Icon: MapPin, href: null, value: t("addressText"), label: t("visitUs") },
+    { Icon: Clock,  href: null, value: t("workingHoursText"), label: t("workingHours") },
+  ];
 
   return (
     <div className="py-16">
       {/* Header */}
       <div className="mx-auto max-w-7xl px-4 pb-14 text-center sm:px-6 lg:px-8">
         <FadeIn>
-          <span className="section-label mb-5">Get In Touch</span>
+          <span className="section-label mb-5">{t("pageBadge")}</span>
           <h1 className="font-heading mt-5 text-4xl font-extrabold text-white sm:text-5xl">
             {t("title")}
           </h1>
           <GoldDivider className="mx-auto mt-5 max-w-xs" />
           <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-slate-300">
-            Reach out to learn more about our programmes, partnership opportunities, or to
-            start your enrolment journey today.
+            {t("subtitle")}
           </p>
         </FadeIn>
       </div>
@@ -51,7 +51,7 @@ export default function ContactPage() {
               {/* Map */}
               <div className="overflow-hidden rounded-2xl border border-[#c4854a]/20 shadow-xl">
                 <iframe
-                  title="Location"
+                  title={t("mapPlaceholder")}
                   src={MAP_EMBED}
                   className="w-full aspect-[4/3] min-h-[280px]"
                   loading="lazy"

@@ -36,6 +36,7 @@ const features = [
 
 export function WhyUs() {
   const t = useTranslations("home");
+  const tSec = useTranslations("sections");
 
   return (
     <section className="relative overflow-hidden py-20">
@@ -51,10 +52,13 @@ export function WhyUs() {
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn className="mb-12 text-center">
-          <span className="section-label mb-4">Our Advantages</span>
+          <span className="section-label mb-4">{tSec("ourAdvantages")}</span>
           <h2 className="font-heading mt-4 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
             {t("whyTitle")}
           </h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-slate-400">
+            {t("whySubtitle")}
+          </p>
           <GoldDivider className="mx-auto mt-5 max-w-xs" />
         </FadeIn>
 

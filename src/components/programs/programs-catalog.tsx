@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Clock, Filter, MapPin, Monitor } from "lucide-react";
+import { ArrowRight, Clock, Filter, MapPin, Monitor, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -17,7 +17,15 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { type ProgramCategory, programs } from "@/lib/data";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 import { cn } from "@/lib/utils";
+
+const categoryColors: Record<string, string> = {
+  management: "#1a56db",
+  hospitality: "#c4854a",
+  quality: "#0d9488",
+  training: "#7c3aed",
+};
 
 const categories: { id: ProgramCategory | "all"; labelKey: string }[] = [
   { id: "all",         labelKey: "all" },
@@ -53,7 +61,7 @@ function FilterPanel({
                 : "border-white/10 bg-white/5 text-slate-400 hover:border-[#c4854a]/30 hover:text-white"
             )}
           >
-            {t(labelKey)}
+            {t(labelKey as "all")}
           </button>
         ))}
       </div>
@@ -65,6 +73,7 @@ export function ProgramsCatalog() {
   const t = useTranslations("programs");
   const [active, setActive] = useState<ProgramCategory | "all">("all");
   const [open, setOpen] = useState(false);
+  const locale = useLanguageStore((s) => s.locale);
 
   const filtered = useMemo(() => {
     if (active === "all") return programs;
@@ -76,10 +85,11 @@ export function ProgramsCatalog() {
       {/* Page header */}
       <div className="mx-auto max-w-7xl px-4 pb-12 text-center sm:px-6 lg:px-8">
         <FadeIn>
-          <span className="section-label mb-5">Our Catalogue</span>
+          <span className="section-label mb-5">{t("pageBadge")}</span>
           <h1 className="font-heading mt-5 text-4xl font-extrabold text-white sm:text-5xl">
             {t("title")}
           </h1>
+          <p className="mx-auto mt-4 max-w-xl text-sm text-slate-400">{t("subtitle")}</p>
           <GoldDivider className="mx-auto mt-5 max-w-xs" />
         </FadeIn>
       </div>
@@ -88,23 +98,34 @@ export function ProgramsCatalog() {
 
         {/* Desktop sidebar */}
         <aside className="hidden w-56 shrink-0 lg:block">
-          <div className="sticky top-24">
+          <div className="sticky top-24 rounded-2xl border border-white/10 bg-white/[0.04] p-5">
             <FilterPanel active={active} onChange={setActive} />
           </div>
         </aside>
 
         {/* Content */}
         <div className="min-w-0 flex-1">
-          {/* Mobile filter trigger */}
-          <div className="mb-6 flex items-center justify-between lg:hidden">
+          {/* Mobile + count bar */}
+          <div className="mb-6 flex items-center justify-between">
             <p className="text-sm text-slate-400">
-              {filtered.length} {filtered.length === 1 ? "program" : "programs"}
+              {filtered.length}&nbsp;
+              {locale === "ar" ? "برنامج" : filtered.length === 1 ? "program" : "programs"}
+              {active !== "all" && (
+                <button
+                  type="button"
+                  onClick={() => setActive("all")}
+                  className="ms-2 inline-flex items-center gap-1 rounded-full border border-[#c4854a]/40 bg-[#c4854a]/10 px-2 py-0.5 text-xs text-[#ebd190] hover:bg-[#c4854a]/20"
+                >
+                  <X className="size-3" />
+                  {t("clearFilters")}
+                </button>
+              )}
             </p>
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger
                 className={cn(
                   buttonVariants({ variant: "outline", size: "sm" }),
-                  "border-[#c4854a]/40 bg-white/5 text-[#ebd190]"
+                  "border-[#c4854a]/40 bg-white/5 text-[#ebd190] lg:hidden"
                 )}
               >
                 <Filter className="me-1.5 size-4" />
@@ -122,60 +143,73 @@ export function ProgramsCatalog() {
           </div>
 
           <StaggerContainer className="grid gap-6 sm:grid-cols-2">
-            {filtered.map((p) => (
-              <StaggerItem key={p.id}>
-                <article className="glass-card group flex h-full flex-col overflow-hidden">
-                  {/* Image */}
-                  <div className="relative aspect-[16/9] overflow-hidden">
-                    <Image
-                      src={p.image}
-                      alt=""
-                      fill
-                      className="object-cover transition duration-700 group-hover:scale-110"
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0c2c59] via-[#0c2c59]/30 to-transparent" />
-                    <span className="absolute start-3 top-3 rounded-full border border-[#c4854a]/50 bg-[#0c2c59]/80 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-[#ebd190] backdrop-blur-sm">
-                      {p.category}
-                    </span>
-                  </div>
-
-                  {/* Body */}
-                  <div className="flex flex-1 flex-col gap-3 p-6">
-                    <h2 className="font-heading text-xl font-bold text-white group-hover:text-[#ebd190]">
-                      {p.title}
-                    </h2>
-                    <p className="text-sm leading-relaxed text-slate-400">{p.description}</p>
-
-                    {/* Meta */}
-                    <div className="mt-auto flex flex-wrap gap-4 border-t border-white/10 pt-4 text-xs text-slate-500">
-                      <span className="flex items-center gap-1.5">
-                        <Clock className="size-3.5 text-[#c4854a]" aria-hidden />
-                        <span className="text-slate-300">{p.duration}</span>
+            {filtered.map((p) => {
+              const localData = p[locale];
+              const accentColor = categoryColors[p.category] ?? "#c4854a";
+              return (
+                <StaggerItem key={p.id}>
+                  <article className="glass-card group flex h-full flex-col overflow-hidden">
+                    {/* Image */}
+                    <div className="relative aspect-[16/9] overflow-hidden">
+                      <Image
+                        src={p.image}
+                        alt={localData.title}
+                        fill
+                        className="object-cover transition duration-700 group-hover:scale-110"
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c2c59] via-[#0c2c59]/30 to-transparent" />
+                      <span
+                        className="absolute start-3 top-3 rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm"
+                        style={{ borderColor: `${accentColor}60`, color: accentColor, background: "rgba(12,44,89,0.85)" }}
+                      >
+                        {t(`category${p.category.charAt(0).toUpperCase() + p.category.slice(1)}` as "categoryManagement")}
                       </span>
-                      <span className="flex items-center gap-1.5">
+                      <span className="absolute end-3 top-3 flex items-center gap-1 rounded-full border border-white/20 bg-[#0c2c59]/70 px-2 py-0.5 text-[10px] text-white backdrop-blur-sm">
                         {p.mode === "online" ? (
-                          <Monitor className="size-3.5 text-[#c4854a]" aria-hidden />
+                          <Monitor className="size-3" aria-hidden />
                         ) : (
-                          <MapPin className="size-3.5 text-[#c4854a]" aria-hidden />
+                          <MapPin className="size-3" aria-hidden />
                         )}
-                        <span className="text-slate-300">
-                          {p.mode === "online" ? t("modeOnline") : t("modeOnsite")}
-                        </span>
+                        {p.mode === "online" ? t("modeOnline") : t("modeOnsite")}
                       </span>
                     </div>
 
-                    <Link
-                      href="/contact"
-                      className="mt-1 flex items-center gap-1.5 text-sm font-bold text-[#ebd190] hover:underline"
-                    >
-                      {t("learnMore")}
-                      <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
-                    </Link>
-                  </div>
-                </article>
-              </StaggerItem>
-            ))}
+                    {/* Body */}
+                    <div className="flex flex-1 flex-col gap-3 p-6">
+                      <h2 className="font-heading text-xl font-bold text-white group-hover:text-[#ebd190]">
+                        {localData.title}
+                      </h2>
+                      <p className="text-sm leading-relaxed text-slate-400">{localData.description}</p>
+
+                      {/* Meta */}
+                      <div className="mt-auto flex flex-wrap gap-4 border-t border-white/10 pt-4 text-xs">
+                        <span className="flex items-center gap-1.5 text-slate-400">
+                          <Clock className="size-3.5 text-[#c4854a]" aria-hidden />
+                          <span className="text-slate-300">{p.duration} {t("weeksSuffix")}</span>
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <Link
+                          href="/contact"
+                          className="flex items-center gap-1.5 text-sm font-bold text-[#ebd190] hover:underline"
+                        >
+                          {t("applyNow")}
+                          <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
+                        </Link>
+                        <Link
+                          href="/contact"
+                          className="text-xs text-slate-500 hover:text-slate-300"
+                        >
+                          {t("learnMore")}
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                </StaggerItem>
+              );
+            })}
           </StaggerContainer>
         </div>
       </div>

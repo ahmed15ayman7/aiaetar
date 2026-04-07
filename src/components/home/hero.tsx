@@ -10,16 +10,17 @@ import { buttonVariants } from "@/components/ui/button";
 import { GoldDivider } from "@/components/ui/gold-divider";
 import { cn } from "@/lib/utils";
 
-const stats = [
-  { value: "2,000+", label: "Graduates" },
-  { value: "15+",    label: "Programs" },
-  { value: "12+",    label: "Years" },
-  { value: "18",     label: "Countries" },
-];
-
 export function Hero() {
   const t = useTranslations("home");
-  const tNav = useTranslations("nav");
+  const tStats = useTranslations("stats");
+  const tMeta = useTranslations("meta");
+
+  const stats = [
+    { value: "3,200+", label: tStats("graduates") },
+    { value: "15+",    label: tStats("programs") },
+    { value: "12+",    label: tStats("years") },
+    { value: "18",     label: tStats("countries") },
+  ];
   const reduce = useReducedMotion();
 
   const fade = (delay = 0) =>
@@ -33,7 +34,7 @@ export function Hero() {
     <section className="relative isolate flex min-h-[100dvh] flex-col overflow-hidden">
       {/* Background photo */}
       <Image
-        src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=80"
+        src="https://picsum.photos/seed/aiaetar-hero/1920/1080"
         alt=""
         fill
         priority
@@ -72,7 +73,7 @@ export function Hero() {
             <motion.div {...fade(0)}>
               <span className="section-label mb-6">
                 <span className="size-1.5 rounded-full bg-[#ebd190]" />
-                AI AETAR – QMS – IMS
+                {t("heroBadge")}
               </span>
             </motion.div>
 
@@ -96,22 +97,22 @@ export function Hero() {
 
             <motion.div {...fade(0.3)} className="flex flex-wrap items-center gap-4">
               <Link
-                href="/contact"
+                href="/programs"
                 className={cn(
                   buttonVariants({ size: "lg" }),
                   "gold-shimmer bg-gold-gradient border border-[#ebd190]/40 px-8 py-6 text-base font-bold text-[#0c1a33] shadow-[0_4px_24px_rgb(196_133_74_/_0.4)]"
                 )}
               >
-                {tNav("enroll")}
+                {t("heroCta")}
               </Link>
               <Link
-                href="/programs"
+                href="/about"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
                   "border-[#c4854a]/50 bg-white/5 px-8 py-6 text-base font-medium text-[#ebd190] hover:bg-white/10"
                 )}
               >
-                {t("programsCta")}
+                {t("heroSecondaryCta")}
               </Link>
             </motion.div>
           </div>
@@ -138,7 +139,7 @@ export function Hero() {
               <div className="relative size-72 xl:size-80 animate-float">
                 <Image
                   src="/logo.png"
-                  alt="American Institute of Applied Education for Tourism & Administrative Research"
+                  alt={tMeta("siteName")}
                   fill
                   sizes="320px"
                   className="object-contain drop-shadow-[0_0_40px_rgba(196,133,74,0.5)]"

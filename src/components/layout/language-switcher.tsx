@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
 
-import { Button } from "@/components/ui/button";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
 export function LanguageSwitcher() {
@@ -12,30 +12,33 @@ export function LanguageSwitcher() {
 
   return (
     <div
-      className="flex items-center gap-1 rounded-lg border border-white/15 bg-white/5 p-1"
+      className="relative flex items-center rounded-lg border border-white/20 bg-white/5 p-0.5 backdrop-blur-sm"
       role="group"
       aria-label={t("label")}
     >
-      <Button
-        type="button"
-        variant={locale === "en" ? "secondary" : "ghost"}
-        size="sm"
-        className="h-7 px-2 text-xs"
-        onClick={() => setLocale("en")}
-        aria-pressed={locale === "en"}
-      >
-        {t("en")}
-      </Button>
-      <Button
-        type="button"
-        variant={locale === "ar" ? "secondary" : "ghost"}
-        size="sm"
-        className="h-7 px-2 text-xs"
-        onClick={() => setLocale("ar")}
-        aria-pressed={locale === "ar"}
-      >
-        {t("ar")}
-      </Button>
+      {/* sliding highlight */}
+      <motion.div
+        className="absolute h-[calc(100%-4px)] w-[calc(50%-2px)] rounded-md bg-gold-gradient"
+        animate={{ x: locale === "ar" ? "calc(100% + 2px)" : "2px" }}
+        transition={{ type: "spring", stiffness: 400, damping: 35 }}
+      />
+
+      {(["en", "ar"] as const).map((lang) => (
+        <button
+          key={lang}
+          type="button"
+          onClick={() => setLocale(lang)}
+          aria-pressed={locale === lang}
+          className={[
+            "relative z-10 min-w-[44px] rounded-md px-3 py-1 text-xs font-semibold tracking-wide transition-colors duration-200",
+            locale === lang
+              ? "text-[#0c2c59]"
+              : "text-white/60 hover:text-white",
+          ].join(" ")}
+        >
+          {lang === "en" ? t("en") : t("ar")}
+        </button>
+      ))}
     </div>
   );
 }

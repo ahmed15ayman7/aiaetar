@@ -9,15 +9,12 @@ import { useState } from "react";
 import { GoldDivider } from "@/components/ui/gold-divider";
 import { FadeIn } from "@/components/ui/motion";
 import { testimonials } from "@/lib/data";
-
-const avatars = [
-  "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&q=80",
-  "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&q=80",
-  "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&q=80",
-];
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 export function Testimonials() {
   const t = useTranslations("home");
+  const tSec = useTranslations("sections");
+  const locale = useLanguageStore((s) => s.locale);
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const reduce = useReducedMotion();
@@ -29,6 +26,7 @@ export function Testimonials() {
   };
 
   const current = testimonials[index];
+  const localData = current[locale];
 
   const variants = {
     enter:  (d: number) => ({ opacity: 0, x: d > 0 ? 60 : -60 }),
@@ -50,10 +48,13 @@ export function Testimonials() {
 
       <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <FadeIn className="mb-14 text-center">
-          <span className="section-label mb-4">Social Proof</span>
+          <span className="section-label mb-4">{tSec("socialProof")}</span>
           <h2 className="font-heading mt-4 text-3xl font-bold text-white sm:text-4xl">
             {t("testimonialsTitle")}
           </h2>
+          <p className="mx-auto mt-3 max-w-lg text-sm text-slate-400">
+            {t("testimonialsSubtitle")}
+          </p>
           <GoldDivider className="mx-auto mt-5 max-w-xs" />
         </FadeIn>
 
@@ -80,7 +81,7 @@ export function Testimonials() {
             <div className="relative min-h-[200px]">
               <AnimatePresence custom={direction} mode="wait">
                 <motion.blockquote
-                  key={index}
+                  key={`${index}-${locale}`}
                   custom={direction}
                   variants={reduce ? {} : variants}
                   initial="enter"
@@ -92,8 +93,8 @@ export function Testimonials() {
                   {/* Avatar */}
                   <div className="relative size-20 overflow-hidden rounded-full border-2 border-[#c4854a]/60 shadow-[0_0_20px_rgba(196,133,74,0.3)]">
                     <Image
-                      src={avatars[index % avatars.length]}
-                      alt={current.name}
+                      src={current.avatar}
+                      alt={localData.name}
                       fill
                       sizes="80px"
                       className="object-cover"
@@ -101,14 +102,14 @@ export function Testimonials() {
                   </div>
 
                   <p className="text-lg leading-relaxed text-slate-200 sm:text-xl">
-                    &ldquo;{current.quote}&rdquo;
+                    &ldquo;{localData.quote}&rdquo;
                   </p>
 
                   <footer className="space-y-1">
                     <cite className="not-italic block font-heading text-base font-semibold text-white">
-                      {current.name}
+                      {localData.name}
                     </cite>
-                    <span className="text-sm text-[#c4854a]">{current.role}</span>
+                    <span className="text-sm text-[#c4854a]">{localData.role}</span>
                   </footer>
                 </motion.blockquote>
               </AnimatePresence>
