@@ -1,12 +1,14 @@
 "use client";
 
-import { Filter } from "lucide-react";
+import { ArrowRight, Clock, Filter, MapPin, Monitor } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
+import { GoldDivider } from "@/components/ui/gold-divider";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import {
   Sheet,
   SheetContent,
@@ -18,11 +20,11 @@ import { type ProgramCategory, programs } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 const categories: { id: ProgramCategory | "all"; labelKey: string }[] = [
-  { id: "all", labelKey: "all" },
-  { id: "management", labelKey: "categoryManagement" },
+  { id: "all",         labelKey: "all" },
+  { id: "management",  labelKey: "categoryManagement" },
   { id: "hospitality", labelKey: "categoryHospitality" },
-  { id: "quality", labelKey: "categoryQuality" },
-  { id: "training", labelKey: "categoryTraining" },
+  { id: "quality",     labelKey: "categoryQuality" },
+  { id: "training",    labelKey: "categoryTraining" },
 ];
 
 function FilterPanel({
@@ -35,7 +37,7 @@ function FilterPanel({
   const t = useTranslations("programs");
   return (
     <div className="space-y-3">
-      <p className="font-heading text-sm font-semibold text-[#ebd190]">
+      <p className="font-heading text-sm font-bold uppercase tracking-widest text-[#ebd190]">
         {t("filterTitle")}
       </p>
       <div className="flex flex-col gap-2">
@@ -45,10 +47,10 @@ function FilterPanel({
             type="button"
             onClick={() => onChange(id)}
             className={cn(
-              "rounded-lg border px-3 py-2 text-start text-sm transition",
+              "rounded-xl border px-4 py-2.5 text-start text-sm font-medium transition-all",
               active === id
-                ? "border-[#b98251] bg-[#b98251]/15 text-white"
-                : "border-white/10 bg-white/5 text-slate-300 hover:border-white/20"
+                ? "border-[#c4854a]/60 bg-[#c4854a]/15 text-[#ebd190] shadow-[0_0_12px_rgba(196,133,74,0.2)]"
+                : "border-white/10 bg-white/5 text-slate-400 hover:border-[#c4854a]/30 hover:text-white"
             )}
           >
             {t(labelKey)}
@@ -70,90 +72,112 @@ export function ProgramsCatalog() {
   }, [active]);
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 py-14 sm:px-6 lg:flex-row lg:px-8">
-      <aside className="hidden w-64 shrink-0 lg:block">
-        <FilterPanel active={active} onChange={setActive} />
-      </aside>
+    <div className="py-14">
+      {/* Page header */}
+      <div className="mx-auto max-w-7xl px-4 pb-12 text-center sm:px-6 lg:px-8">
+        <FadeIn>
+          <span className="section-label mb-5">Our Catalogue</span>
+          <h1 className="font-heading mt-5 text-4xl font-extrabold text-white sm:text-5xl">
+            {t("title")}
+          </h1>
+          <GoldDivider className="mx-auto mt-5 max-w-xs" />
+        </FadeIn>
+      </div>
 
-      <div className="min-w-0 flex-1">
-        <div className="mb-6 flex items-center justify-between gap-4 lg:hidden">
-          <h1 className="font-heading text-3xl font-bold text-white">{t("title")}</h1>
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger
-              className={cn(
-                buttonVariants({ variant: "outline", size: "default" }),
-                "border-[#b98251]/40 bg-white/5 text-white"
-              )}
-              aria-label={t("filterTitle")}
-            >
-              <Filter className="me-2 size-4" />
-              {t("filterTitle")}
-            </SheetTrigger>
-            <SheetContent
-              side="left"
-              className="border-white/10 bg-[#0c2c59]/98 text-white"
-            >
-              <SheetHeader>
-                <SheetTitle>{t("title")}</SheetTitle>
-              </SheetHeader>
-              <div className="mt-6">
-                <FilterPanel
-                  active={active}
-                  onChange={(c) => {
-                    setActive(c);
-                    setOpen(false);
-                  }}
-                />
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
+      <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 sm:px-6 lg:flex-row lg:px-8">
 
-        <h1 className="font-heading mb-8 hidden text-4xl font-bold text-white lg:block">
-          {t("title")}
-        </h1>
+        {/* Desktop sidebar */}
+        <aside className="hidden w-56 shrink-0 lg:block">
+          <div className="sticky top-24">
+            <FilterPanel active={active} onChange={setActive} />
+          </div>
+        </aside>
 
-        <ul className="grid gap-6 sm:grid-cols-2">
-          {filtered.map((p) => (
-            <li key={p.id}>
-              <article className="glass-card flex h-full flex-col overflow-hidden">
-                <div className="relative aspect-[16/10]">
-                  <Image
-                    src={p.image}
-                    alt=""
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 100vw, 50vw"
-                  />
+        {/* Content */}
+        <div className="min-w-0 flex-1">
+          {/* Mobile filter trigger */}
+          <div className="mb-6 flex items-center justify-between lg:hidden">
+            <p className="text-sm text-slate-400">
+              {filtered.length} {filtered.length === 1 ? "program" : "programs"}
+            </p>
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "sm" }),
+                  "border-[#c4854a]/40 bg-white/5 text-[#ebd190]"
+                )}
+              >
+                <Filter className="me-1.5 size-4" />
+                {t("filterTitle")}
+              </SheetTrigger>
+              <SheetContent side="left" className="w-64 border-[#c4854a]/20 bg-[#0c2c59] text-white">
+                <SheetHeader>
+                  <SheetTitle className="text-[#ebd190]">{t("title")}</SheetTitle>
+                </SheetHeader>
+                <div className="mt-6">
+                  <FilterPanel active={active} onChange={(c) => { setActive(c); setOpen(false); }} />
                 </div>
-                <div className="flex flex-1 flex-col gap-3 p-5">
-                  <h2 className="font-heading text-xl font-semibold text-white">
-                    {p.title}
-                  </h2>
-                  <p className="text-sm text-slate-300">{p.description}</p>
-                  <div className="mt-auto flex flex-wrap gap-3 text-xs text-slate-400">
-                    <span>
-                      <span className="text-[#b98251]">{t("duration")}: </span>
-                      {p.duration}
-                    </span>
-                    <span>
-                      <span className="text-[#b98251]">{t("mode")}: </span>
-                      {p.mode === "online"
-                        ? t("modeOnline")
-                        : t("modeOnsite")}
+              </SheetContent>
+            </Sheet>
+          </div>
+
+          <StaggerContainer className="grid gap-6 sm:grid-cols-2">
+            {filtered.map((p) => (
+              <StaggerItem key={p.id}>
+                <article className="glass-card group flex h-full flex-col overflow-hidden">
+                  {/* Image */}
+                  <div className="relative aspect-[16/9] overflow-hidden">
+                    <Image
+                      src={p.image}
+                      alt=""
+                      fill
+                      className="object-cover transition duration-700 group-hover:scale-110"
+                      sizes="(max-width: 640px) 100vw, 50vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0c2c59] via-[#0c2c59]/30 to-transparent" />
+                    <span className="absolute start-3 top-3 rounded-full border border-[#c4854a]/50 bg-[#0c2c59]/80 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-[#ebd190] backdrop-blur-sm">
+                      {p.category}
                     </span>
                   </div>
-                  <Link
-                    href="/contact"
-                    className="text-sm font-medium text-[#ebd190] hover:underline"
-                  >
-                    {t("learnMore")}
-                  </Link>
-                </div>
-              </article>
-            </li>
-          ))}
-        </ul>
+
+                  {/* Body */}
+                  <div className="flex flex-1 flex-col gap-3 p-6">
+                    <h2 className="font-heading text-xl font-bold text-white group-hover:text-[#ebd190]">
+                      {p.title}
+                    </h2>
+                    <p className="text-sm leading-relaxed text-slate-400">{p.description}</p>
+
+                    {/* Meta */}
+                    <div className="mt-auto flex flex-wrap gap-4 border-t border-white/10 pt-4 text-xs text-slate-500">
+                      <span className="flex items-center gap-1.5">
+                        <Clock className="size-3.5 text-[#c4854a]" aria-hidden />
+                        <span className="text-slate-300">{p.duration}</span>
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        {p.mode === "online" ? (
+                          <Monitor className="size-3.5 text-[#c4854a]" aria-hidden />
+                        ) : (
+                          <MapPin className="size-3.5 text-[#c4854a]" aria-hidden />
+                        )}
+                        <span className="text-slate-300">
+                          {p.mode === "online" ? t("modeOnline") : t("modeOnsite")}
+                        </span>
+                      </span>
+                    </div>
+
+                    <Link
+                      href="/contact"
+                      className="mt-1 flex items-center gap-1.5 text-sm font-bold text-[#ebd190] hover:underline"
+                    >
+                      {t("learnMore")}
+                      <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
+                    </Link>
+                  </div>
+                </article>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
       </div>
     </div>
   );

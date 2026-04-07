@@ -4,66 +4,87 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { ContactForm } from "@/components/contact/contact-form";
-import { FadeIn } from "@/components/ui/fade-in";
+import { GoldDivider } from "@/components/ui/gold-divider";
+import { FadeIn, SlideIn } from "@/components/ui/motion";
 
 const MAP_EMBED =
   "https://maps.google.com/maps?q=30.0444%2C31.2357&z=15&output=embed";
+
+const contactDetails = [
+  { Icon: Phone, href: "tel:+2020000000",     value: "+20 2 0000 0000",   label: "Call us" },
+  { Icon: Mail,  href: "mailto:info@aiaetar.edu", value: "info@aiaetar.edu", label: "Email us" },
+  { Icon: MapPin, href: null,                 value: "Cairo, Egypt",       label: "Visit us" },
+];
 
 export default function ContactPage() {
   const t = useTranslations("contact");
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-      <FadeIn>
-        <h1 className="font-heading mb-10 text-center text-4xl font-bold text-white">
-          {t("title")}
-        </h1>
-      </FadeIn>
-      <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
+    <div className="py-16">
+      {/* Header */}
+      <div className="mx-auto max-w-7xl px-4 pb-14 text-center sm:px-6 lg:px-8">
         <FadeIn>
-          <ContactForm />
+          <span className="section-label mb-5">Get In Touch</span>
+          <h1 className="font-heading mt-5 text-4xl font-extrabold text-white sm:text-5xl">
+            {t("title")}
+          </h1>
+          <GoldDivider className="mx-auto mt-5 max-w-xs" />
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-slate-300">
+            Reach out to learn more about our programmes, partnership opportunities, or to
+            start your enrolment journey today.
+          </p>
         </FadeIn>
-        <div className="flex min-h-0 flex-col gap-6">
-          <FadeIn delay={0.05}>
-            <div className="glass-panel overflow-hidden rounded-2xl">
-              <iframe
-                title="Location"
-                src={MAP_EMBED}
-                className="aspect-[4/3] w-full min-h-[280px] lg:min-h-[360px]"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <ul className="glass-panel space-y-4 rounded-2xl p-6 text-slate-200">
-              <li className="flex gap-3">
-                <Phone
-                  className="mt-0.5 size-5 shrink-0 text-[#b98251]"
-                  aria-hidden
+      </div>
+
+      {/* Split layout */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
+
+          {/* Left: Form */}
+          <SlideIn direction="left">
+            <ContactForm />
+          </SlideIn>
+
+          {/* Right: Map + details */}
+          <div className="flex flex-col gap-6">
+            <SlideIn direction="right">
+              {/* Map */}
+              <div className="overflow-hidden rounded-2xl border border-[#c4854a]/20 shadow-xl">
+                <iframe
+                  title="Location"
+                  src={MAP_EMBED}
+                  className="w-full aspect-[4/3] min-h-[280px]"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
                 />
-                <a href="tel:+2020000000" className="hover:text-white">
-                  +20 2 0000 0000
-                </a>
-              </li>
-              <li className="flex gap-3">
-                <Mail
-                  className="mt-0.5 size-5 shrink-0 text-[#b98251]"
-                  aria-hidden
-                />
-                <a href="mailto:info@aiaetar.edu" className="hover:text-white">
-                  info@aiaetar.edu
-                </a>
-              </li>
-              <li className="flex gap-3">
-                <MapPin
-                  className="mt-0.5 size-5 shrink-0 text-[#b98251]"
-                  aria-hidden
-                />
-                <span>Cairo, Egypt</span>
-              </li>
-            </ul>
-          </FadeIn>
+              </div>
+            </SlideIn>
+
+            <SlideIn direction="right" delay={0.08}>
+              {/* Contact details */}
+              <ul className="glass-panel space-y-5 rounded-2xl p-7">
+                {contactDetails.map(({ Icon, href, value, label }) => (
+                  <li key={label} className="flex items-start gap-4">
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-[#c4854a]/40 bg-[#c4854a]/15 text-[#c4854a]">
+                      <Icon className="size-5" aria-hidden />
+                    </span>
+                    <div>
+                      <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-[#c4854a]">
+                        {label}
+                      </p>
+                      {href ? (
+                        <a href={href} className="text-sm text-slate-200 hover:text-[#ebd190]">
+                          {value}
+                        </a>
+                      ) : (
+                        <p className="text-sm text-slate-200">{value}</p>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </SlideIn>
+          </div>
         </div>
       </div>
     </div>

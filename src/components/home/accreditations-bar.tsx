@@ -2,37 +2,58 @@
 
 import { useTranslations } from "next-intl";
 
-import { FadeIn } from "@/components/ui/fade-in";
+import { GoldDivider } from "@/components/ui/gold-divider";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { accreditations } from "@/lib/data";
 
 export function AccreditationsBar() {
   const t = useTranslations("home");
 
   return (
-    <section className="py-14">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <FadeIn>
-          <h2 className="font-heading mb-8 text-center text-2xl font-bold text-white sm:text-3xl">
+    <section className="relative overflow-hidden py-20">
+      {/* Background stripe */}
+      <div className="absolute inset-0 bg-[#0c2c59]/60" aria-hidden />
+      <div
+        className="absolute inset-x-0 top-0 h-px"
+        style={{
+          background: "linear-gradient(90deg, transparent, rgba(196,133,74,0.5), transparent)",
+        }}
+        aria-hidden
+      />
+      <div
+        className="absolute inset-x-0 bottom-0 h-px"
+        style={{
+          background: "linear-gradient(90deg, transparent, rgba(196,133,74,0.5), transparent)",
+        }}
+        aria-hidden
+      />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn className="mb-12 text-center">
+          <span className="section-label mb-4">Our Credentials</span>
+          <h2 className="font-heading mt-4 text-3xl font-bold text-white sm:text-4xl">
             {t("accreditationsTitle")}
           </h2>
+          <GoldDivider className="mx-auto mt-5 max-w-xs" />
         </FadeIn>
-        <div className="flex gap-6 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {accreditations.map((a, i) => (
-            <FadeIn key={a.id} delay={i * 0.05}>
-              <div
-                className="group flex min-w-[200px] flex-1 flex-col items-center justify-center rounded-xl border border-white/10 bg-white/5 px-8 py-10 transition hover:border-[#b98251]/50"
-                title={a.name}
-              >
-                <div className="mb-3 text-3xl font-bold grayscale transition group-hover:grayscale-0">
-                  <span className="text-[#ebd190]">{a.abbr}</span>
+
+        <StaggerContainer className="flex flex-wrap justify-center gap-6">
+          {accreditations.map((a) => (
+            <StaggerItem key={a.id}>
+              <div className="group flex min-w-[200px] flex-1 flex-col items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-8 py-8 transition-all duration-300 hover:border-[#c4854a]/50 hover:bg-white/[0.07] hover:shadow-[0_8px_32px_rgba(196,133,74,0.15)]">
+                {/* Mock seal */}
+                <div className="flex size-16 items-center justify-center rounded-full border-2 border-[#c4854a]/40 bg-gradient-to-br from-[#c4854a]/20 to-transparent transition-all group-hover:border-[#ebd190]/60 group-hover:shadow-[0_0_20px_rgba(196,133,74,0.3)]">
+                  <span className="font-heading text-lg font-extrabold text-[#ebd190]">
+                    {a.abbr}
+                  </span>
                 </div>
-                <p className="text-center text-xs text-slate-400 transition group-hover:text-slate-200">
+                <p className="text-center text-xs font-medium text-slate-400 transition-colors group-hover:text-slate-200">
                   {a.name}
                 </p>
               </div>
-            </FadeIn>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
