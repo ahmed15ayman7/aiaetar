@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "siteName": "المعهد الأمريكي للتعليم التطبيقي في السياحة والبحوث الإدارية",
+    "instituteShort": "المعهد الأمريكي",
+    "description": "التميز في التدريب التطبيقي والبحث والتطوير المهني في قطاعي السياحة والإدارة."
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "programs": "البرامج",
+    "certifications": "الاعتمادات",
+    "trainers": "المدربون",
+    "resources": "الموارد",
+    "contact": "اتصل بنا",
+    "enroll": "سجّل الآن"
+  },
+  "language": {
+    "label": "اللغة",
+    "en": "الإنجليزية",
+    "ar": "العربية"
+  },
+  "footer": {
+    "bio": "معهد أكاديمي رائد يقدم تعليماً تطبيقياً في السياحة والبحوث الإدارية، ويمكّن المهنيين من خلال برامج دقيقة ومعايير دولية.",
+    "quickLinks": "روابط سريعة",
+    "contactTitle": "تواصل",
+    "newsletter": "النشرة البريدية",
+    "newsletterPlaceholder": "بريدك الإلكتروني",
+    "newsletterCta": "اشترك",
+    "rights": "جميع الحقوق محفوظة."
+  },
+  "home": {
+    "heroTitle": "التميز في التدريب التطبيقي والبحث...",
+    "heroSubtitle": "طوّر مسيرتك المهنية برامج معتمدة مصممة لقطاعي السياحة والإدارة على مستوى العالم.",
+    "whyTitle": "لماذا نحن",
+    "whyFeature1": "خبرة مهنية",
+    "whyFeature2": "برامج دولية",
+    "whyFeature3": "تدريب تطبيقي",
+    "whyFeature4": "اعتمادات",
+    "whyFeature5": "دعم مستمر",
+    "programsTitle": "برامج مميزة",
+    "programsCta": "عرض جميع البرامج",
+    "accreditationsTitle": "الاعتمادات والشركاء",
+    "testimonialsTitle": "ماذا يقول خريجونا",
+    "newsTitle": "آخر الأخبار",
+    "newsReadMore": "اقرأ المزيد"
+  },
+  "about": {
+    "title": "من نحن",
+    "vision": "الرؤية",
+    "visionText": "أن نكون مرجعاً إقليمياً للتميز في التعليم التطبيقي والبحث في السياحة والإدارة.",
+    "mission": "الرسالة",
+    "missionText": "نقدم برامج موجهة للممارسة، ونعزز البحث، ونتعاون مع القطاع لتشكيل قادة مسؤولين.",
+    "values": "القيم",
+    "valuesText": "النزاهة والتميز والنظرة الدولية والتحسين المستمر يوجهان كل مبادرة.",
+    "teamTitle": "القيادة والهيئة التدريسية"
+  },
+  "programs": {
+    "title": "البرامج",
+    "filterTitle": "تصفية حسب الفئة",
+    "all": "الكل",
+    "categoryManagement": "الإدارة",
+    "categoryHospitality": "الضيافة",
+    "categoryQuality": "الجودة",
+    "categoryTraining": "التدريب",
+    "duration": "المدة",
+    "mode": "النمط",
+    "modeOnsite": "حضوري",
+    "modeOnline": "عن بُعد",
+    "learnMore": "اعرف المزيد"
+  },
+  "certifications": {
+    "title": "الاعتمادات",
+    "license": "الترخيص",
+    "issued": "تاريخ الإصدار",
+    "review": "مراجعة"
+  },
+  "resources": {
+    "title": "الموارد",
+    "filterAll": "الكل",
+    "filterArticles": "مقالات",
+    "filterVideos": "فيديو",
+    "filterPdf": "PDF",
+    "searchPlaceholder": "ابحث في الموارد...",
+    "view": "تنزيل / عرض"
+  },
+  "contact": {
+    "title": "اتصل بنا",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "message": "الرسالة",
+    "submit": "إرسال",
+    "address": "العنوان",
+    "success": "شكراً — تم استلام رسالتك.",
+    "validation": {
+      "nameMin": "يرجى إدخال حرفين على الأقل.",
+      "emailInvalid": "أدخل بريداً إلكترونياً صالحاً.",
+      "phoneMin": "أدخل رقماً صالحاً.",
+      "messageMin": "يرجى إدخال 10 أحرف على الأقل."
+    }
+  },
+  "trainers": {
+    "title": "المدربون",
+    "role": "المسمى"
+  }
+}

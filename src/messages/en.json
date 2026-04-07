@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "siteName": "American Institute of Applied Education for Tourism & Administrative Research",
+    "instituteShort": "American Institute",
+    "description": "Excellence in applied training, research, and professional development for tourism and administration."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "programs": "Programs",
+    "certifications": "Certifications",
+    "trainers": "Trainers",
+    "resources": "Resources",
+    "contact": "Contact",
+    "enroll": "Enroll Now"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "ar": "Arabic"
+  },
+  "footer": {
+    "bio": "A leading academic institute dedicated to applied education in tourism and administrative research, empowering professionals with rigorous programs and international standards.",
+    "quickLinks": "Quick Links",
+    "contactTitle": "Contact",
+    "newsletter": "Newsletter",
+    "newsletterPlaceholder": "Your email",
+    "newsletterCta": "Subscribe",
+    "rights": "All rights reserved."
+  },
+  "home": {
+    "heroTitle": "Excellence in Applied Training & Research...",
+    "heroSubtitle": "Advance your career with accredited programs designed for the global tourism and administrative sectors.",
+    "whyTitle": "Why Us",
+    "whyFeature1": "Professional Expertise",
+    "whyFeature2": "International Programs",
+    "whyFeature3": "Applied Training",
+    "whyFeature4": "Accreditations",
+    "whyFeature5": "Continuous Support",
+    "programsTitle": "Featured Programs",
+    "programsCta": "View all programs",
+    "accreditationsTitle": "Accreditations & Partners",
+    "testimonialsTitle": "What Our Graduates Say",
+    "newsTitle": "Latest News",
+    "newsReadMore": "Read more"
+  },
+  "about": {
+    "title": "About Us",
+    "vision": "Vision",
+    "visionText": "To be a regional reference for applied education and research excellence in tourism and administration.",
+    "mission": "Mission",
+    "missionText": "We deliver practice-oriented programs, foster research, and partner with industry to shape responsible leaders.",
+    "values": "Values",
+    "valuesText": "Integrity, excellence, international outlook, and continuous improvement guide every initiative.",
+    "teamTitle": "Leadership & Faculty"
+  },
+  "programs": {
+    "title": "Programs",
+    "filterTitle": "Filter by category",
+    "all": "All",
+    "categoryManagement": "Management",
+    "categoryHospitality": "Hospitality",
+    "categoryQuality": "Quality",
+    "categoryTraining": "Training",
+    "duration": "Duration",
+    "mode": "Mode",
+    "modeOnsite": "On-site",
+    "modeOnline": "Online",
+    "learnMore": "Learn more"
+  },
+  "certifications": {
+    "title": "Certifications",
+    "license": "License",
+    "issued": "Issued",
+    "review": "Review"
+  },
+  "resources": {
+    "title": "Resources",
+    "filterAll": "All",
+    "filterArticles": "Articles",
+    "filterVideos": "Videos",
+    "filterPdf": "PDF Downloads",
+    "searchPlaceholder": "Search resources...",
+    "view": "Download / View"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "submit": "Send message",
+    "address": "Address",
+    "success": "Thank you — your message has been received.",
+    "validation": {
+      "nameMin": "Please enter at least 2 characters.",
+      "emailInvalid": "Enter a valid email address.",
+      "phoneMin": "Enter a valid phone number.",
+      "messageMin": "Please enter at least 10 characters."
+    }
+  },
+  "trainers": {
+    "title": "Trainers",
+    "role": "Role"
+  }
+}
