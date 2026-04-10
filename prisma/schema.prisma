@@ -1,0 +1,40 @@
+// Prisma v7 schema – connection URL is configured in prisma.config.ts (not here)
+// Run: npx prisma generate   → generates client
+// Run: npx prisma db push     → pushes schema to Supabase
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Certificate {
+  id                String   @id @default(cuid())
+  traineeId         String   @unique
+  certificateNo     String   @unique
+  fullName          String
+  accreditationBody String
+  certificateType   String
+  trainingProgram   String
+  jobTitle          String
+  workplace         String
+  trainingDate      DateTime
+  trainingHours     Int
+  issuedAt          DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([certificateNo])
+  @@index([traineeId])
+  @@index([fullName])
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String   @default("Admin")
+  createdAt DateTime @default(now())
+}
