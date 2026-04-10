@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 
 /* Column header map (matches the Excel format shown in the UI) */
 const HEADERS: Record<string, string> = {
-  "المتدرب ID":          "traineeId",
+  "ID المتدرب":          "traineeId",
   "رقم الشهادة":         "certificateNo",
   "الاسم الكامل":        "fullName",
   "جهة الاعتماد":        "accreditationBody",
