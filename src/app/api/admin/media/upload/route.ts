@@ -32,6 +32,7 @@ export async function POST(request: Request) {
       const isVideo = file.type.startsWith("video/");
 
       const uploaded = await uploadToCloudinary(buffer, {
+        folder: "aiaetar/gallery",
         resource_type: isVideo ? "video" : "image",
       });
 
