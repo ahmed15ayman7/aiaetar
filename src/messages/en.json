@@ -13,7 +13,8 @@
     "resources": "Resources",
     "contact": "Contact",
     "enroll": "Enroll Now",
-    "verify": "Verify Certificate"
+    "verify": "Verify Certificate",
+    "gallery": "Gallery"
   },
   "language": {
     "label": "Language",
@@ -249,5 +250,16 @@
     "countries": "Countries",
     "rating": "Rating",
     "viewProfile": "View Profile"
+  },
+  "gallery": {
+    "badge": "Media Gallery",
+    "title": "Photo & Video Gallery",
+    "subtitle": "A visual journey through our events, training sessions, and institute milestones.",
+    "filterAll": "All",
+    "filterPhotos": "Photos",
+    "filterVideos": "Videos",
+    "empty": "No media available yet.",
+    "loadMore": "Load more",
+    "loading": "Loading…"
   }
 }

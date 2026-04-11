@@ -18,6 +18,7 @@ const quickLinks = [
   { href: "/trainers",       key: "trainers" },
   { href: "/resources",      key: "resources" },
   { href: "/verify",         key: "verify" },
+  { href: "/gallery",        key: "gallery" },
   { href: "/contact",        key: "contact" },
 ] as const;
 

@@ -3,6 +3,7 @@
 import {
   BarChart3,
   FileSpreadsheet,
+  Images,
   LogOut,
   Menu,
   ShieldCheck,
@@ -17,6 +18,7 @@ import { useState } from "react";
 const navLinks = [
   { href: "/admin/dashboard",     label: "Dashboard",     Icon: BarChart3 },
   { href: "/admin/certificates",  label: "Certificates",  Icon: FileSpreadsheet },
+  { href: "/admin/gallery",       label: "Gallery",       Icon: Images },
   { href: "/admin/admins",        label: "Admin Users",   Icon: Users },
 ];
 
