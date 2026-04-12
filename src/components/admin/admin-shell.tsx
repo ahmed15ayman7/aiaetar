@@ -6,6 +6,7 @@ import {
   Images,
   LogOut,
   Menu,
+  MessageSquare,
   ShieldCheck,
   Users,
   X,
@@ -13,23 +14,67 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const navLinks = [
-  { href: "/admin/dashboard",     label: "Dashboard",     Icon: BarChart3 },
-  { href: "/admin/certificates",  label: "Certificates",  Icon: FileSpreadsheet },
-  { href: "/admin/gallery",       label: "Gallery",       Icon: Images },
-  { href: "/admin/admins",        label: "Admin Users",   Icon: Users },
+  { href: "/admin/dashboard",     label: "Dashboard",   Icon: BarChart3,      badge: false },
+  { href: "/admin/certificates",  label: "Certificates", Icon: FileSpreadsheet, badge: false },
+  { href: "/admin/gallery",       label: "Gallery",     Icon: Images,         badge: false },
+  { href: "/admin/requests",      label: "Requests",    Icon: MessageSquare,  badge: true  },
+  { href: "/admin/admins",        label: "Admin Users", Icon: Users,          badge: false },
 ];
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
-  const pathname  = usePathname();
-  const router    = useRouter();
+  const pathname        = usePathname();
+  const router          = useRouter();
   const [open, setOpen] = useState(false);
+  const [newCount, setNewCount] = useState(0);
+
+  useEffect(() => {
+    fetch("/api/admin/requests/count")
+      .then((r) => r.json())
+      .then((d) => setNewCount(d.count ?? 0))
+      .catch(() => {});
+
+    // Poll every 60 s while admin is active
+    const id = setInterval(() => {
+      fetch("/api/admin/requests/count")
+        .then((r) => r.json())
+        .then((d) => setNewCount(d.count ?? 0))
+        .catch(() => {});
+    }, 60_000);
+    return () => clearInterval(id);
+  }, []);
 
   async function handleLogout() {
     await fetch("/api/admin/logout", { method: "POST" });
     router.push("/admin");
+  }
+
+  function NavItem({
+    href, label, Icon, badge, onClick,
+  }: {
+    href: string; label: string; Icon: React.ElementType; badge: boolean; onClick?: () => void;
+  }) {
+    const active = pathname.startsWith(href);
+    return (
+      <Link
+        href={href}
+        onClick={onClick}
+        className={[
+          "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
+          active ? "bg-[#c4854a]/15 text-[#ebd190]" : "text-slate-400 hover:bg-white/5 hover:text-white",
+        ].join(" ")}
+      >
+        <Icon className="size-4 shrink-0" aria-hidden />
+        <span className="flex-1">{label}</span>
+        {badge && newCount > 0 && (
+          <span className="flex min-w-[18px] items-center justify-center rounded-full bg-amber-500 px-1 py-0.5 text-[10px] font-bold leading-none text-black">
+            {newCount > 99 ? "99+" : newCount}
+          </span>
+        )}
+      </Link>
+    );
   }
 
   return (
@@ -44,20 +89,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         </div>
 
         <nav className="flex-1 space-y-1 p-3">
-          {navLinks.map(({ href, label, Icon }) => (
-            <Link
-              key={href}
-              href={href}
-              className={[
-                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-                pathname.startsWith(href)
-                  ? "bg-[#c4854a]/15 text-[#ebd190]"
-                  : "text-slate-400 hover:bg-white/5 hover:text-white",
-              ].join(" ")}
-            >
-              <Icon className="size-4 shrink-0" aria-hidden />
-              {label}
-            </Link>
+          {navLinks.map((link) => (
+            <NavItem key={link.href} {...link} />
           ))}
         </nav>
 
@@ -79,14 +112,21 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           <ShieldCheck className="size-5 text-[#c4854a]" aria-hidden />
           <span className="font-heading text-sm font-bold text-[#ebd190]">Admin</span>
         </div>
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="text-slate-400 hover:text-white"
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
+        <div className="flex items-center gap-2">
+          {newCount > 0 && (
+            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1 text-[10px] font-bold text-black">
+              {newCount}
+            </span>
+          )}
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="text-slate-400 hover:text-white"
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
+        </div>
       </div>
 
       {/* ── Mobile drawer ── */}
@@ -104,21 +144,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <span className="font-heading text-xs font-bold text-[#ebd190]">AI AETAR Admin</span>
             </div>
             <nav className="space-y-1">
-              {navLinks.map(({ href, label, Icon }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  onClick={() => setOpen(false)}
-                  className={[
-                    "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium",
-                    pathname.startsWith(href)
-                      ? "bg-[#c4854a]/15 text-[#ebd190]"
-                      : "text-slate-400 hover:bg-white/5 hover:text-white",
-                  ].join(" ")}
-                >
-                  <Icon className="size-4" aria-hidden />
-                  {label}
-                </Link>
+              {navLinks.map((link) => (
+                <NavItem key={link.href} {...link} onClick={() => setOpen(false)} />
               ))}
               <button
                 type="button"

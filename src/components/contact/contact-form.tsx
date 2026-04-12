@@ -32,6 +32,8 @@ export function ContactForm() {
   );
 
   const [showSuccess, setShowSuccess] = useState(false);
+  const [submitting, setSubmitting]   = useState(false);
+  const [serverError, setServerError] = useState("");
 
   const {
     register,
@@ -40,17 +42,27 @@ export function ContactForm() {
     reset,
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-    },
+    defaultValues: { name: "", email: "", phone: "", message: "" },
   });
 
-  const onSubmit = () => {
-    setShowSuccess(true);
-    reset();
+  const onSubmit = async (values: FormValues) => {
+    setServerError("");
+    setSubmitting(true);
+    try {
+      const res  = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const data = await res.json();
+      if (!res.ok) { setServerError(data.error ?? "Something went wrong."); return; }
+      setShowSuccess(true);
+      reset();
+    } catch {
+      setServerError("Network error. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -123,10 +135,17 @@ export function ContactForm() {
       </div>
       <Button
         type="submit"
-        className="gold-shimmer w-full bg-gold-gradient font-semibold text-[#0c1a33] sm:w-auto"
+        disabled={submitting}
+        className="gold-shimmer w-full bg-gold-gradient font-semibold text-[#0c1a33] sm:w-auto disabled:opacity-60"
       >
-        {t("submit")}
+        {submitting ? "…" : t("submit")}
       </Button>
+
+      {serverError && (
+        <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-300" role="alert">
+          {serverError}
+        </p>
+      )}
       {showSuccess && (
         <p className="text-sm text-[#ebd190]" role="status">
           {t("success")}

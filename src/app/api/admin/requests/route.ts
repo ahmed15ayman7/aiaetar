@@ -1,0 +1,44 @@
+import { getAdminSession } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+
+export async function GET(request: Request) {
+  const session = await getAdminSession();
+  if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { searchParams } = new URL(request.url);
+  const status  = searchParams.get("status") ?? undefined;
+  const search  = searchParams.get("q")?.trim() ?? undefined;
+  const cursor  = searchParams.get("cursor") ?? undefined;
+  const take    = Math.min(Number(searchParams.get("take") ?? "20"), 100);
+
+  const where = {
+    ...(status ? { status } : {}),
+    ...(search
+      ? {
+          OR: [
+            { name:    { contains: search, mode: "insensitive" as const } },
+            { email:   { contains: search, mode: "insensitive" as const } },
+            { phone:   { contains: search, mode: "insensitive" as const } },
+            { message: { contains: search, mode: "insensitive" as const } },
+          ],
+        }
+      : {}),
+  };
+
+  const [items, newCount] = await Promise.all([
+    prisma.contactRequest.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      take: take + 1,
+      ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
+    }),
+    prisma.contactRequest.count({ where: { status: "new" } }),
+  ]);
+
+  const hasMore = items.length > take;
+  return Response.json({
+    items: hasMore ? items.slice(0, take) : items,
+    nextCursor: hasMore ? items[take - 1].id : null,
+    newCount,
+  });
+}
