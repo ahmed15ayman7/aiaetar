@@ -136,13 +136,13 @@ export function Hero() {
                 />
               ))}
               {/* Logo */}
-              <div className="relative size-72 xl:size-80 animate-float rounded-full">
+              <div className="relative size-72 xl:size-80 animate-float">
                 <Image
                   src="/logo.png"
                   alt={tMeta("siteName")}
                   fill
                   sizes="320px"
-                  className="object-contain drop-shadow-[0_0_40px_rgba(196,133,74,0.5)] rounded-full"
+                  className="object-contain drop-shadow-[0_0_40px_rgba(196,133,74,0.5)]"
                   priority
                 />
               </div>

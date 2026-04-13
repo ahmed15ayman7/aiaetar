@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, Eye, Globe2, Heart, Target } from "lucide-react";
+import { Award, BookOpen, CheckCircle2, Eye, Globe2, Heart, Lightbulb, Shield, Target, TrendingUp, Users, Zap } from "lucide-react";
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -11,10 +11,27 @@ import { teamMembers } from "@/lib/data";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const valueKeys = [
-  { icon: CheckCircle2, titleKey: "value1" as const, descKey: "value1Desc" as const },
-  { icon: Globe2,       titleKey: "value2" as const, descKey: "value2Desc" as const },
-  { icon: Heart,        titleKey: "value3" as const, descKey: "value3Desc" as const },
-  { icon: Target,       titleKey: "value4" as const, descKey: "value4Desc" as const },
+  { icon: Award,       titleKey: "value1" as const, descKey: "value1Desc" as const },
+  { icon: BookOpen,    titleKey: "value2" as const, descKey: "value2Desc" as const },
+  { icon: Heart,       titleKey: "value3" as const, descKey: "value3Desc" as const },
+  { icon: Globe2,      titleKey: "value4" as const, descKey: "value4Desc" as const },
+];
+
+const objectiveKeys = [
+  { icon: Users,       titleKey: "obj1" as const, descKey: "obj1Desc" as const },
+  { icon: TrendingUp,  titleKey: "obj2" as const, descKey: "obj2Desc" as const },
+  { icon: Zap,         titleKey: "obj3" as const, descKey: "obj3Desc" as const },
+  { icon: Target,      titleKey: "obj4" as const, descKey: "obj4Desc" as const },
+  { icon: Globe2,      titleKey: "obj5" as const, descKey: "obj5Desc" as const },
+  { icon: Lightbulb,   titleKey: "obj6" as const, descKey: "obj6Desc" as const },
+];
+
+const qualityKeys = [
+  { icon: Shield,      titleKey: "q1" as const, descKey: "q1Desc" as const },
+  { icon: Award,       titleKey: "q2" as const, descKey: "q2Desc" as const },
+  { icon: TrendingUp,  titleKey: "q3" as const, descKey: "q3Desc" as const },
+  { icon: CheckCircle2,titleKey: "q4" as const, descKey: "q4Desc" as const },
+  { icon: Zap,         titleKey: "q5" as const, descKey: "q5Desc" as const },
 ];
 
 export default function AboutPage() {
@@ -138,6 +155,63 @@ export default function AboutPage() {
               {t("storyP2")}
             </p>
           </SlideIn>
+        </div>
+      </div>
+
+      {/* ── Objectives ── */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn className="mb-10 text-center">
+          <span className="section-label mb-4">{t("objectivesBadge")}</span>
+          <h2 className="font-heading mt-4 text-3xl font-bold text-white sm:text-4xl">
+            {t("objectivesTitle")}
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-slate-400">{t("objectivesSubtitle")}</p>
+          <GoldDivider className="mx-auto mt-5 max-w-xs" />
+        </FadeIn>
+        <StaggerContainer className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {objectiveKeys.map(({ icon: Icon, titleKey, descKey }, idx) => (
+            <StaggerItem key={titleKey}>
+              <div className="glass-card group flex h-full gap-4 p-6">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-[#c4854a]/40 bg-[#c4854a]/10 text-[#ebd190] transition-all group-hover:border-[#ebd190]/50 group-hover:bg-[#c4854a]/20">
+                  <Icon className="size-5" aria-hidden />
+                </span>
+                <div>
+                  <div className="mb-1 flex items-center gap-2">
+                    <span className="text-xs font-bold text-[#c4854a]">0{idx + 1}</span>
+                    <h3 className="font-heading text-sm font-bold text-white">{t(titleKey)}</h3>
+                  </div>
+                  <p className="text-xs leading-relaxed text-slate-400">{t(descKey)}</p>
+                </div>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+      </div>
+
+      {/* ── Quality & Accreditation ── */}
+      <div className="border-y border-[#c4854a]/15 bg-[#0c2c59]/40 py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <FadeIn className="mb-10 text-center">
+            <span className="section-label mb-4">{t("qualityBadge")}</span>
+            <h2 className="font-heading mt-4 text-3xl font-bold text-white sm:text-4xl">
+              {t("qualityTitle")}
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm text-slate-400">{t("qualitySubtitle")}</p>
+            <GoldDivider className="mx-auto mt-5 max-w-xs" />
+          </FadeIn>
+          <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {qualityKeys.map(({ icon: Icon, titleKey, descKey }) => (
+              <StaggerItem key={titleKey}>
+                <div className="glass-card flex h-full flex-col items-center gap-3 p-6 text-center">
+                  <span className="flex size-12 items-center justify-center rounded-full border border-[#c4854a]/40 bg-gradient-to-br from-[#c4854a]/20 to-[#0c2c59] text-[#ebd190]">
+                    <Icon className="size-5" aria-hidden />
+                  </span>
+                  <h3 className="font-heading text-xs font-bold text-white">{t(titleKey)}</h3>
+                  <p className="text-[11px] leading-relaxed text-slate-400">{t(descKey)}</p>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </div>
       </div>
 

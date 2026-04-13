@@ -21,18 +21,20 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 import { cn } from "@/lib/utils";
 
 const categoryColors: Record<string, string> = {
-  management: "#1a56db",
-  hospitality: "#c4854a",
-  quality: "#0d9488",
-  training: "#7c3aed",
+  diploma:     "#1a56db",
+  short:       "#c4854a",
+  elearning:   "#0d9488",
+  leadership:  "#7c3aed",
+  engineering: "#d97706",
 };
 
 const categories: { id: ProgramCategory | "all"; labelKey: string }[] = [
   { id: "all",         labelKey: "all" },
-  { id: "management",  labelKey: "categoryManagement" },
-  { id: "hospitality", labelKey: "categoryHospitality" },
-  { id: "quality",     labelKey: "categoryQuality" },
-  { id: "training",    labelKey: "categoryTraining" },
+  { id: "diploma",     labelKey: "categoryDiploma" },
+  { id: "short",       labelKey: "categoryShort" },
+  { id: "elearning",   labelKey: "categoryElearning" },
+  { id: "leadership",  labelKey: "categoryLeadership" },
+  { id: "engineering", labelKey: "categoryEngineering" },
 ];
 
 function FilterPanel({
@@ -163,7 +165,7 @@ export function ProgramsCatalog() {
                         className="absolute start-3 top-3 rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm"
                         style={{ borderColor: `${accentColor}60`, color: accentColor, background: "rgba(12,44,89,0.85)" }}
                       >
-                        {t(`category${p.category.charAt(0).toUpperCase() + p.category.slice(1)}` as "categoryManagement")}
+                        {t(`category${p.category.charAt(0).toUpperCase() + p.category.slice(1)}` as "categoryDiploma")}
                       </span>
                       <span className="absolute end-3 top-3 flex items-center gap-1 rounded-full border border-white/20 bg-[#0c2c59]/70 px-2 py-0.5 text-[10px] text-white backdrop-blur-sm">
                         {p.mode === "online" ? (
