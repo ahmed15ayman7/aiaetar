@@ -99,7 +99,7 @@ export function SiteHeader() {
           : "border-b border-white/5 bg-[#0c2c59]/60 backdrop-blur-xl"
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-[95vw] items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
 
         {/* Logo */}
         <Link
