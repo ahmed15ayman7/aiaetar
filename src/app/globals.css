@@ -186,6 +186,9 @@
   .bg-gold-gradient {
     background-image: linear-gradient(135deg, #9a6c3a 0%, #c4854a 40%, #ebd190 100%);
   }
+  .bg-gold-gradient-reverse {
+    background-image: linear-gradient(135deg, #ebd190 0%, #c4854a 40%, #9a6c3a 100%);
+  }
 
   /* Text gold gradient */
   .text-gold-gradient {

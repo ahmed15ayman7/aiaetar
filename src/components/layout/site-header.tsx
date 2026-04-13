@@ -121,8 +121,8 @@ export function SiteHeader() {
             />
           </motion.div>
           <div className="hidden flex-col leading-none sm:flex">
-            <span className="font-heading text-sm font-bold text-[#ebd190]">
-              AI AETAR – QMS – IMS
+            <span className="font-heading text-sm font-bold bg-gold-gradient-reverse text-transparent bg-clip-text">
+              AIA ETAR – QMS – IMS
             </span>
             <span className="max-w-[210px] truncate text-[10px] font-normal text-slate-400">
               {tMeta("siteName")}
