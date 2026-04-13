@@ -2,7 +2,7 @@
   "meta": {
     "siteName": "American Institute of Applied Education for Tourism & Administrative Research",
     "instituteShort": "AI AETAR",
-    "description": "Excellence in applied training, research, and professional development for tourism and administration."
+    "description": "Licensed institute for applied education in tourism and administrative research — diplomas, courses, e-learning, and accredited programmes aligned with labour market needs."
   },
   "nav": {
     "home": "Home",
@@ -14,7 +14,8 @@
     "contact": "Contact",
     "enroll": "Enroll Now",
     "verify": "Verify Certificate",
-    "gallery": "Gallery"
+    "gallery": "Gallery",
+    "portfolio": "Portfolio"
   },
   "language": {
     "label": "Language",
@@ -261,5 +262,13 @@
     "empty": "No media available yet.",
     "loadMore": "Load more",
     "loading": "Loading…"
+  },
+  "portfolio": {
+    "pageBadge": "Institute Portfolio",
+    "title": "Full Institute Portfolio",
+    "subtitle": "Applied diplomas, short courses, e-learning, leadership, engineering and quality programmes — aligned with international standards.",
+    "introLabelAr": "Introduction — Arabic",
+    "introLabelEn": "Introduction — English",
+    "ctaText": "Ready to enrol or need guidance? Contact us — our team will help you choose the right track."
   }
 }

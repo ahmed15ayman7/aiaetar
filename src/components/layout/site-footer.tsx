@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 const quickLinks = [
   { href: "/",               key: "home" },
   { href: "/about",          key: "about" },
+  { href: "/portfolio",      key: "portfolio" },
   { href: "/programs",       key: "programs" },
   { href: "/certifications", key: "certifications" },
   { href: "/trainers",       key: "trainers" },
