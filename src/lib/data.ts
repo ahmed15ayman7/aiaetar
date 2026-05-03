@@ -699,6 +699,20 @@ export type TeamMember = {
 
 export const teamMembers: TeamMember[] = [
   {
+    id: "3",
+    image: "/trainers/frahat.png",
+    en: {
+      name: "Farahat Ahmed Nassar",
+      role: "Quality Manager - AIAETAR",
+      bio: "Email: info@aiaetar.com. Highly experienced Quality Management professional with over 25 years of expertise in Integrated Management Systems (IMS), ISO standards implementation, auditing, and hospitality sector development. Professional Title: QMS & IMS Lead Specialist | Certified Quality Assurance Expert | ISO Consultant. Core Competencies: IMS Development, ISO Compliance, Audit Management, Training, Hospitality Quality Systems. Affiliations: General Trainer & Fellow of the National Council for Training and Education, IMS Lead Auditor, Certified Quality Control & Assurance Specialist (National Quality Institute & Egyptian Organization for Standardization). Professional Experience: Over 25 years in hotel and resort operations management; currently Operations Manager at A Capital Holding for Tourism Development. About AIAETAR: Professional institute specialized in tourism, hospitality, and administrative training aligned with international standards.",
+    },
+    ar: {
+      name: "فرحات أحمد نصار",
+      role: "مدير الجودة - المعهد الأمريكي",
+      bio: "البريد الإلكتروني: info@aiaetar.com. خبير إدارة جودة بخبرة تتجاوز 25 عاماً في نظم الإدارة المتكاملة (IMS) وتطبيق معايير ISO والتدقيق وتطوير قطاع الضيافة. المسمى المهني: QMS & IMS Lead Specialist | Certified Quality Assurance Expert | ISO Consultant. الكفاءات الأساسية: تطوير IMS، الامتثال لمعايير ISO، إدارة التدقيق، التدريب، وأنظمة جودة الضيافة. العضويات والاعتمادات: مدرب عام وزميل المجلس القومي للتدريب والتعليم، مراجع رئيسي IMS، وأخصائي معتمد في ضبط وتوكيد الجودة من المعهد القومي للجودة والهيئة المصرية للمواصفات والجودة. الخبرة المهنية: أكثر من 25 عاماً في إدارة عمليات الفنادق والمنتجعات، ويشغل حالياً منصب مدير العمليات في A Capital Holding for Tourism Development. عن المعهد الأمريكي: معهد مهني متخصص في التدريب السياحي والفندقي والإداري وفق المعايير الدولية.",
+    },
+  },
+  {
     id: "1",
     image: "/trainers/abdelkreem.png",
     en: {
@@ -726,20 +740,7 @@ export const teamMembers: TeamMember[] = [
       bio: "خبير في أنظمة سلامة الغذاء وتطبيقات الهاسب وضمان الجودة في المطاعم والفنادق والمنشآت الغذائية.",
     },
   },
-  {
-    id: "3",
-    image: "/trainers/frahat.png",
-    en: {
-      name: "Farahat Ahmed Nassar",
-      role: "Quality Manager - AIAETAR",
-      bio: "QMS & IMS Lead Specialist and certified quality assurance expert with 25+ years in ISO implementation, auditing, and hospitality quality systems. National Quality Institute Fellow and certified trainer. Contact: Aiaetar715@gmail.com",
-    },
-    ar: {
-      name: "فرحات أحمد نصار",
-      role: "مدير الجودة - المعهد الأمريكي",
-      bio: "خبير إدارة جودة بخبرة تتجاوز 25 عاماً في نظم الإدارة المتكاملة (IMS) وتطبيق معايير ISO والتدقيق وتطوير جودة قطاع الضيافة. حاصل على لقب QMS & IMS Lead Specialist ومدرب معتمد ومراجع رئيسي ISO. للتواصل: Aiaetar715@gmail.com",
-    },
-  },
+ 
   {
     id: "4",
     image: "/trainers/gehad-eldeen.png",

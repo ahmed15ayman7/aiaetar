@@ -245,7 +245,7 @@ export default function AboutPage() {
                     {/* Hover overlay */}
                     <div className="absolute inset-0 flex flex-col justify-end gap-2 bg-gradient-to-t from-[#9a6c3a]/90 to-[#0c2c59]/60 p-5 opacity-0 transition-all duration-300 group-hover:opacity-100">
                       <p className="text-xs leading-relaxed text-white/80">{localData.bio}</p>
-                      <a
+                      {/* <a
                         href="https://linkedin.com"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -254,7 +254,7 @@ export default function AboutPage() {
                       >
                         <ExternalLink className="size-3.5" />
                         {t("teamLinkedIn")}
-                      </a>
+                      </a> */}
                     </div>
                   </div>
                   {/* Card footer */}
