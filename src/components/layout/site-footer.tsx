@@ -23,7 +23,7 @@ const quickLinks = [
 ] as const;
 
 const MAP_EMBED =
-  "https://maps.google.com/maps?q=30.0444%2C31.2357&z=15&output=embed";
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.5185470882043!2d31.344891299999997!3d30.050667399999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fd6b8de1643%3A0x4728673f53f26710!2sESpaces!5e0!3m2!1sen!2seg!4v1779273481753!5m2!1sen!2seg";
 
 const socials = [
   { label: "Facebook", href: "https://facebook.com" },
