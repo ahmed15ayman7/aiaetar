@@ -82,9 +82,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       {/* ── Sidebar (desktop) ── */}
       <aside className="hidden w-56 shrink-0 flex-col border-e border-white/10 bg-[#08152a] lg:flex">
         <div className="flex items-center gap-2.5 border-b border-white/10 px-5 py-5">
-          <Image src="/logo.png" alt="AI AETAR" width={36} height={36} className="rounded-full" />
+          <Image src="/logo.png" alt="AIAETAR" width={36} height={36} className="rounded-full" />
           <span className="font-heading text-xs font-bold leading-tight text-[#ebd190]">
-            AI AETAR<br /><span className="text-slate-400 font-normal">Admin</span>
+            AIAETAR<br /><span className="text-slate-400 font-normal">Admin</span>
           </span>
         </div>
 
@@ -141,7 +141,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           >
             <div className="mb-4 flex items-center gap-2.5 pb-4 border-b border-white/10">
               <Image src="/logo.png" alt="" width={36} height={36} className="rounded-full" />
-              <span className="font-heading text-xs font-bold text-[#ebd190]">AI AETAR Admin</span>
+              <span className="font-heading text-xs font-bold text-[#ebd190]">AIAETAR Admin</span>
             </div>
             <nav className="space-y-1">
               {navLinks.map((link) => (

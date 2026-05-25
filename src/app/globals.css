@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  /* Brand palette matched to the AI AETAR logo */
+  /* Brand palette matched to the AIAETAR logo */
   --color-brand-blue-dark:    #0c2c59;
   --color-brand-blue-mid:     #0f2852;
   --color-brand-blue-light:   #153668;

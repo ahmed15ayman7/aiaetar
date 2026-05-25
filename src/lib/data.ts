@@ -662,7 +662,7 @@ export const newsItems: NewsItem[] = [
     date: "2026-03-02",
     image: "https://picsum.photos/seed/news-research/600/400",
     en: {
-      title: "AI AETAR Achieves ISO 9001:2015 Renewal for 2026",
+      title: "AIAETAR Achieves ISO 9001:2015 Renewal for 2026",
       excerpt: "Our Quality Management System has been successfully re-certified for another three-year cycle, reaffirming our commitment to internationally accredited training standards.",
       tag: "Accreditation",
     },
@@ -765,7 +765,7 @@ export type Trainer = {
 export const trainers: Trainer[] = [
   {
     id: "1",
-    image: "/trainers/mohamedAli.png",
+    image: "/trainers/mohamedAli.jpeg",
     rating: 4.9,
     courses: 8,
     countries: 5,

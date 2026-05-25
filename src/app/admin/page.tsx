@@ -207,7 +207,7 @@ function PageWrapper({ title, subtitle, children }: {
       />
       <div className="relative w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center gap-3">
-          <Image src="/logo.png" alt="AI AETAR" width={72} height={72} className="rounded-full" />
+          <Image src="/logo.png" alt="AIAETAR" width={72} height={72} className="rounded-full" />
           <h1 className="font-heading text-2xl font-bold text-[#ebd190]">{title}</h1>
           {subtitle && <p className="text-xs text-slate-400">{subtitle}</p>}
         </div>

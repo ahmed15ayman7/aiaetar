@@ -114,7 +114,7 @@ export function SiteHeader() {
           >
             <Image
               src="/logo.png"
-              alt="AI AETAR logo"
+              alt="AIAETAR logo"
               fill
               sizes="44px"
               className="rounded-full object-cover"
@@ -174,7 +174,7 @@ export function SiteHeader() {
                     className="rounded-full"
                   />
                   <span className="font-heading text-sm text-[#ebd190]">
-                    AI AETAR
+                    AIAETAR
                   </span>
                 </SheetTitle>
               </SheetHeader>
