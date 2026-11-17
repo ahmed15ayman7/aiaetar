@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+web/node_modules
+admin/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -15,7 +17,13 @@
 
 # next.js
 /.next/
+web/.next/
+admin/.next/
 /out/
+
+# .NET
+backend/bin/
+backend/obj/
 
 # production
 /build
